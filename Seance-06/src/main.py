@@ -105,6 +105,12 @@ plt.savefig("./output/Q6_loi_rang-taille_log-log_terres.png") #Sauvegarde du ré
 plt.close() #Fermeture propre du graphe
 
 
+## Question 7 ##
+# Non, on ne peut pas faire un test (statistique) sur les rangs. 
+# En effet, les rangs ne sont pas issus d'un échantillon aléatoire, mais ils sont générés par une simple numérotation ordonée (1er, 2e, 3e, ...).
+# Ainsi, on ne peut pas leur appliquer de test (comme par exemple ceux de Spearman ou Wilcoxon)
+
+
 #Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
 
 
