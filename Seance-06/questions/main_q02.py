@@ -54,11 +54,15 @@ def classementPays(ordre1, ordre2):
 #Partie sur les îles
 
 ## Question 2 ##
-iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv"))
-print(iles)
-
+#Ouverture du fichier "island-index.csv"
+iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
+print(iles) #OPTIONNEL: pour en avoir un aperçu
 
 #Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
+
+
+
+
 
 
 #Partie sur les populations des États du monde
