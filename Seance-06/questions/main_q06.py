@@ -93,14 +93,15 @@ plt.close() #Fermeture propre du graphe
 
 
 ## Question 6 ##
-list_surf_log = conversionLog(list_surf_terr_decr) #Conversion de notre liste initiale -> passage au logarithme
-plt.plot(rangs, list_surf_log, "o-") #Génération du nouveau graphe
+list_surf_log = conversionLog(list_surf_terr_decr) #Passage au logarithme des valeurs de surface (axe Y)
+rangs_log = conversionLog(rangs)                   #Passage au logarithme des valeurs de rang (axe X)
+plt.plot(rangs_log, list_surf_log, "o-") #Génération du nouveau graphe
 
-plt.title("Q6 — Loi rang-log(taille) des terres") #Ajout du titre
-plt.xlabel("Rang")         #Ajout du titre de l'axe X
+plt.title("Q6 — Loi rang-taille (log-log) des terres") #Ajout du titre
+plt.xlabel("log(Rang)")    #Ajout du titre de l'axe X
 plt.ylabel("log(Surface)") #Ajout du titre de l'axe Y
 plt.grid(True)             #Ajout de la grille
-plt.savefig("./output/Q6_loi_rang_taille_terres_log.png") #Sauvegarde du résultat sous le nom "Q6_loi_rang_log-taille_terres.png"
+plt.savefig("./output/Q6_loi_rang-taille_log-log_terres.png") #Sauvegarde du résultat sous le nom "Q6_loi_rang-taille_log-log_terres.png"
 plt.close() #Fermeture propre du graphe
 
 
