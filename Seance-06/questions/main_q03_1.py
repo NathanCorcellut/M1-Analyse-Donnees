@@ -54,17 +54,21 @@ def classementPays(ordre1, ordre2):
 #Partie sur les îles
 
 ## Question 2 ##
-iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv"))
-#print(iles)
+#Ouverture du fichier "island-index.csv"
+iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
+#print(iles) #OPTIONNEL: aperçu du tableau entier
+
+#Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
 
 
 ## Question 3 ##
-##On isole la colonne "Surface (km²)"
-surfaces_iles = iles["Surface (km²)"]
-print(surfaces_iles)
+#On isole la colonne "Surface (km²)" en la castant en list()
+surfaces_iles = list(iles["Surface (km²)"])
+print(surfaces_iles) #OPTIONNEL: aperçu de la liste créée
 
 
-#Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
+
+
 
 
 #Partie sur les populations des États du monde
