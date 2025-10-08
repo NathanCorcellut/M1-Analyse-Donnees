@@ -54,45 +54,52 @@ def classementPays(ordre1, ordre2):
 #Partie sur les îles
 
 ## Question 2 ##
-iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv"))
-#print(iles)
+#Ouverture du fichier "island-index.csv"
+iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
+#print(iles) #OPTIONNEL: aperçu du tableau entier
+
+#Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
 
 
 ## Question 3 ##
-##On isole la colonne "Surface (km²)"
-surfaces_iles = iles["Surface (km²)"]
-#print(surfaces_iles)
+#On isole la colonne "Surface (km²)" en la castant en list()
+surfaces = list(iles["Surface (km²)"])
+#print(surfaces) #OPTIONNEL: aperçu de la liste créée
 
-##On repart du fichier, on y ajoute les surfaces des continents, puis on isole la colonne "Surface (km²)"
-terres = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) #On ouvre à nouveau le fichier
-terres.loc[len(terres)] = [None, "Asie / Afrique / Europe", None, None, None, None, None, float(85545323),  None, None] #Ajout après la dernière ligne
-terres.loc[len(terres)] = [None, "Amérique",                None, None, None, None, None, float(37856841),  None, None] #Ajout après la nouvelle dernière ligne
-terres.loc[len(terres)] = [None, "Antarctique",             None, None, None, None, None, float(7768030),   None, None] #Ajout après la nouvelle dernière ligne
-terres.loc[len(terres)] = [None, "Australie",               None, None, None, None, None, float(7605049),   None, None] #Ajout après la nouvelle dernière ligne
-surfaces_terrestres = terres["Surface (km²)"] #Isolement de la colonne "Surface (km²)"
-#print(surfaces_terrestres)
+#Ajout des valeurs de surface des continents
+surfaces.append(float(85545323)) #Asie / Afrique / Europe
+surfaces.append(float(37856841)) #Amérique
+surfaces.append(float( 7768030)) #Antarctique
+surfaces.append(float( 7605049)) #Australie
+#print(surfaces) #OPTIONNEL: aperçu de la liste complétée
 
 
 ## Question 4 ##
-##On ordonne la liste surfaces_terrestres (de facon décroissante) 
-list_surf_terr_decr = ordreDecroissant(list(surfaces_terrestres))
-#print(list_surf_terr_decr)
+#On ordonne la liste "surfaces" (de façon décroissante) 
+surfaces_decroissant = ordreDecroissant(surfaces)
+#print(surfaces_decroissant) #OPTIONNEL: aperçu de la liste complétée et triée
 
 
 ## Question 5 ##
-rangs = list(range(1, len(list_surf_terr_decr) +1)) #Liste pour l'axe des abscisses, on a rangs = [1,2,3, ... , 84223]
-plt.plot(rangs, list_surf_terr_decr, "o-") #Génération du graphe
+#On crée la liste des rangs (qui seront les abscisses du graphe)
+rangs = list(range(1, len(surfaces_decroissant)+1)) #On a: rangs = [1, 2, 3, ... , 84223]
 
-plt.title("Q5 - Loi rang-taille des terres") #Ajout du titre
-plt.xlabel("Rang")          #Ajout du titre de l'axe X
-plt.ylabel("Surface (km²)") #Ajout du titre de l'axe Y
+#Génération du graphe
+plt.plot(rangs, surfaces_decroissant, "o-") #Génération du graphe
+
+#Ajout des titres et de la grille
+plt.title("Q5 - Loi rang-taille des terres émergées") #Titre principal
+plt.xlabel("Rang")          #Titre de l'axe X
+plt.ylabel("Surface (km²)") #Titre de l'axe Y
 plt.grid(True)              #Ajout de la grille
 
-plt.savefig("./output/Q5_loi_rang_taille_terres.png") #Sauvegarde du résultat sous le nom "Q5_loi_rang_taille_terres.png"
-plt.close() #Fermeture propre du graphe
+#Sauvegarde du résultat 
+plt.savefig("./output/Q5-loi_rang-taille_terres.png") #sous le nom "Q5-loi_rang-taille_terres.png"
+plt.close() #Fermeture 'propre' du graphe
 
 
-#Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
+
+
 
 
 #Partie sur les populations des États du monde

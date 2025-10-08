@@ -63,8 +63,8 @@ iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv"))
 
 ## Question 3 ##
 #On isole la colonne "Surface (km²)" en la castant en list()
-surfaces_iles = list(iles["Surface (km²)"])
-print(surfaces_iles) #OPTIONNEL: aperçu de la liste créée
+surfaces = list(iles["Surface (km²)"])
+print(surfaces) #OPTIONNEL: aperçu de la liste créée
 
 
 

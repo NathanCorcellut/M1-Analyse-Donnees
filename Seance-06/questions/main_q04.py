@@ -54,32 +54,34 @@ def classementPays(ordre1, ordre2):
 #Partie sur les îles
 
 ## Question 2 ##
-iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv"))
-#print(iles)
+#Ouverture du fichier "island-index.csv"
+iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
+#print(iles) #OPTIONNEL: aperçu du tableau entier
+
+#Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
 
 
 ## Question 3 ##
-##On isole la colonne "Surface (km²)"
-surfaces_iles = iles["Surface (km²)"]
-#print(surfaces_iles)
+#On isole la colonne "Surface (km²)" en la castant en list()
+surfaces = list(iles["Surface (km²)"])
+#print(surfaces) #OPTIONNEL: aperçu de la liste créée
 
-##On repart du fichier, on y ajoute les surfaces des continents, puis on isole la colonne "Surface (km²)"
-terres = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) #On ouvre à nouveau le fichier
-terres.loc[len(terres)] = [None, "Asie / Afrique / Europe", None, None, None, None, None, float(85545323),  None, None] #Ajout après la dernière ligne
-terres.loc[len(terres)] = [None, "Amérique",                None, None, None, None, None, float(37856841),  None, None] #Ajout après la nouvelle dernière ligne
-terres.loc[len(terres)] = [None, "Antarctique",             None, None, None, None, None, float(7768030),   None, None] #Ajout après la nouvelle dernière ligne
-terres.loc[len(terres)] = [None, "Australie",               None, None, None, None, None, float(7605049),   None, None] #Ajout après la nouvelle dernière ligne
-surfaces_terrestres = terres["Surface (km²)"] #Isolement de la colonne "Surface (km²)"
-#print(surfaces_terrestres)
+#Ajout des valeurs de surface des continents
+surfaces.append(float(85545323)) #Asie / Afrique / Europe
+surfaces.append(float(37856841)) #Amérique
+surfaces.append(float( 7768030)) #Antarctique
+surfaces.append(float( 7605049)) #Australie
+#print(surfaces) #OPTIONNEL: aperçu de la liste complétée
 
 
 ## Question 4 ##
-##On ordonne la liste surfaces_terrestres (de facon décroissante) 
-list_surf_terr_decr = ordreDecroissant(list(surfaces_terrestres))
-print(list_surf_terr_decr)
+#On ordonne la liste "surfaces" (de façon décroissante) 
+surfaces_decroissant = ordreDecroissant(surfaces)
+print(surfaces_decroissant) #OPTIONNEL: aperçu de la liste complétée et triée
 
 
-#Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
+
+
 
 
 #Partie sur les populations des États du monde
