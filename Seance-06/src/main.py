@@ -48,7 +48,7 @@ def classementPays(ordre1, ordre2):
         for element1 in range(0, len(ordre1) - 1):
             for element2 in range(0, len(ordre2) - 1):
                 if ordre2[element2][1] == ordre1[element1][1]:
-                    classement.append([ordre1[element1][0], ordre2[element2][0], ordre1[element][1]])
+                    classement.append([ordre1[element1][0], ordre2[element2][0], ordre1[element1][1]])
     return classement
 
 #Partie sur les îles
@@ -129,7 +129,45 @@ plt.close() #Fermeture 'propre' du graphe
 
 
 #Partie sur les populations des États du monde
+
+## Question 9 ##
+#Ouverture du fichier "Le-Monde-HS-Etats-du-monde-2007-2025.csv"
 #Source. Depuis 2007, tous les ans jusque 2025, M. Forriez a relevé l'intégralité du nombre d'habitants dans chaque États du monde proposé par un numéro hors-série du monde intitulé États du monde. Vous avez l'évolution de la population et de la densité par année.
-#monde = pd.DataFrame(ouvrirUnFichier("./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv"))
+monde = pd.DataFrame(ouvrirUnFichier("./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv"))
+#print(monde) #OPTIONNEL: aperçu du tableau entier
 
 #Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
+
+
+## Question 10 ##
+#On isole les cinq colonnes demandées en les castant en list()
+etats =       list(monde["État"]) 
+pop2007 =     list(monde["Pop 2007"])
+pop2025 =     list(monde["Pop 2025"])
+densite2007 = list(monde["Densité 2007"])
+densite2025 = list(monde["Densité 2025"])
+
+#OPTIONNEL: aperçu des listes créées
+#print(etats)       #État
+#print(pop2007)     #Pop 2007
+#print(pop2025)     #Pop 2025
+#print(densite2007) #Densité 2007
+#print(densite2025) #Densité 2025
+
+
+## Question 11 ##
+ord_pop2007 = ordrePopulation(pop2007, etats)
+ord_pop2025 = ordrePopulation(pop2025, etats)
+ord_densite2007 = ordrePopulation(densite2007, etats)
+ord_densite2025 = ordrePopulation(densite2025, etats)
+
+#print(ord_pop2007)
+#print(ord_pop2025)
+#print(ord_densite2007)
+#print(ord_densite2025)
+
+## Question 12 ##
+test_pop = classementPays(ord_pop2007,ord_pop2025)
+print(test_pop)
+test_pop.sort()
+print(test_pop) #c'est juste maintenant idem avec la densité
