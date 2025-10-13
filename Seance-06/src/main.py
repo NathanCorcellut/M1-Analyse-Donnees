@@ -40,13 +40,13 @@ def ordrePopulation(pop, etat):
 def classementPays(ordre1, ordre2):
     classement = []
     if len(ordre1) <= len(ordre2):
-        for element1 in range(0, len(ordre2) - 1):
-            for element2 in range(0, len(ordre1) - 1):
+        for element1 in range(0, len(ordre2)):
+            for element2 in range(0, len(ordre1)):
                 if ordre2[element1][1] == ordre1[element2][1]:
                     classement.append([ordre1[element2][0], ordre2[element1][0], ordre1[element2][1]])
     else:
-        for element1 in range(0, len(ordre1) - 1):
-            for element2 in range(0, len(ordre2) - 1):
+        for element1 in range(0, len(ordre1)):
+            for element2 in range(0, len(ordre2)):
                 if ordre2[element2][1] == ordre1[element1][1]:
                     classement.append([ordre1[element1][0], ordre2[element2][0], ordre1[element1][1]])
     return classement
@@ -156,18 +156,78 @@ densite2025 = list(monde["Densité 2025"])
 
 
 ## Question 11 ##
-ord_pop2007 = ordrePopulation(pop2007, etats)
-ord_pop2025 = ordrePopulation(pop2025, etats)
-ord_densite2007 = ordrePopulation(densite2007, etats)
-ord_densite2025 = ordrePopulation(densite2025, etats)
+#On ordonne les listes de manière décroissante
+ord_pop2007 = ordrePopulation(pop2007, etats)         #Pop 2007 ordonnée
+ord_pop2025 = ordrePopulation(pop2025, etats)         #Pop 2025 ordonnée
+ord_densite2007 = ordrePopulation(densite2007, etats) #Densité 2007 ordonnée
+ord_densite2025 = ordrePopulation(densite2025, etats) #Densité 2025 ordonnée
 
-#print(ord_pop2007)
-#print(ord_pop2025)
-#print(ord_densite2007)
-#print(ord_densite2025)
+#OPTIONNEL: aperçu des listes triées
+#print(ord_pop2007)     #Pop 2007 ordonnée
+#print(ord_pop2025)     #Pop 2025 ordonnée
+#print(ord_densite2007) #Densité 2007 ordonnéé
+#print(ord_densite2025) #Densité 2025 ordonnée
+
 
 ## Question 12 ##
-test_pop = classementPays(ord_pop2007,ord_pop2025)
-print(test_pop)
-test_pop.sort()
-print(test_pop) #c'est juste maintenant idem avec la densité
+#Comparaison entre le classement des États selon leurs populations de 2007
+#               et le classement des États selon leurs densités de 2007
+compar_pop_dens_2007 = classementPays(ord_pop2007,ord_densite2007)
+
+#Comparaison entre le classement des États selon leurs populations de 2025
+#               et le classement des États selon leurs densités de 2025
+compar_pop_dens_2025 = classementPays(ord_pop2025,ord_densite2025)
+
+#OPTIONNEL: aperçu des comparatifs obtenus
+#print(compar_pop_dens_2007) #pour 2007
+#print(compar_pop_dens_2025) #pour 2025
+
+
+#Le comparatif obtenu pour 2007 est ordonné par rapport à "ord_pop2007"
+# (c.à.d par rapport au classement des États selon leurs populations)
+compar_pop_dens_2007.sort()
+
+#Le comparatif obtenu pour 2025 est ordonné par rapport à "ord_pop2025"
+# (c.à.d par rapport au classement des États selon leurs populations)
+compar_pop_dens_2025.sort()
+
+#OPTIONNEL: aperçu des comparatifs - ordonnés par rapport à "ord_pop20XX"
+# (c.à.d par rapport au classement des États selon leurs populations)
+print(compar_pop_dens_2007) #pour 2007
+#print(compar_pop_dens_2025) #pour 2025
+
+
+## Question 13 ##
+#Pour l'année 2007
+#On isole les colonnes
+rangs_pop_2007 = []
+rangs_densite_2007 = []
+for triplet in compar_pop_dens_2007 :
+    rangs_pop_2007.append(triplet[0])
+    rangs_densite_2007.append(triplet[1])
+
+print("rangs_pop_2007", rangs_pop_2007)
+print("rangs_densite_2007", rangs_densite_2007)
+
+#Pour l'année 2025
+#On isole les colonnes
+rangs_pop_2025 = []
+rangs_densite_2025 = []
+for triplet in compar_pop_dens_2025 :
+    rangs_pop_2025.append(triplet[0])
+    rangs_densite_2025.append(triplet[1])
+
+print("rangs_pop_2025", rangs_pop_2025)
+print("rangs_densite_2025", rangs_densite_2025)
+
+
+## Question 14 ##
+rho, p_value_spearmanr = scipy.stats.spearmanr(rangs_pop_2007,rangs_densite_2007)
+
+print("rho", rho)
+print("p_value_spearman", p_value_spearmanr)
+
+tau, p_value_kendall = scipy.stats.kendalltau(rangs_pop_2007,rangs_densite_2007)
+
+print("tau", tau)
+print("p_value_kendall", p_value_kendall)
