@@ -64,20 +64,20 @@ iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv"))
 ## Question 3 ##
 #On isole la colonne "Surface (km²)" en la castant en list()
 surfaces = list(iles["Surface (km²)"])
-#print(surfaces) #OPTIONNEL: aperçu de la liste créée
+#print(surfaces) #OPTIONNEL: aperçu de la liste créée /!\ Affichage terminal volumineux
 
 #Ajout des valeurs de surface des continents
 surfaces.append(float(85545323)) #Asie / Afrique / Europe
 surfaces.append(float(37856841)) #Amérique
 surfaces.append(float( 7768030)) #Antarctique
 surfaces.append(float( 7605049)) #Australie
-#print(surfaces) #OPTIONNEL: aperçu de la liste complétée
+#print(surfaces) #OPTIONNEL: aperçu de la liste complétée /!\ Affichage terminal volumineux
 
 
 ## Question 4 ##
 #On ordonne la liste "surfaces" (de façon décroissante) 
 surfaces_decroissant = ordreDecroissant(surfaces)
-#print(surfaces_decroissant) #OPTIONNEL: aperçu de la liste complétée et triée
+#print(surfaces_decroissant) #OPTIONNEL: aperçu de la liste complétée et triée /!\ Affichage terminal volumineux
 
 
 ## Question 5 ##
@@ -89,8 +89,8 @@ plt.plot(rangs, surfaces_decroissant, "o-") #Génération du graphe
 
 #Ajout des titres et de la grille
 plt.title("Q5 - Loi rang-taille des terres émergées") #Titre principal
-plt.xlabel("Rang")          #Titre de l'axe X
-plt.ylabel("Surface (km²)") #Titre de l'axe Y
+plt.xlabel("Rang")          #Titre de l'axe horizontal (X)
+plt.ylabel("Surface (km²)") #Titre de l'axe vertical (Y)
 plt.grid(True)              #Ajout de la grille
 
 #Sauvegarde du résultat 
@@ -108,8 +108,8 @@ plt.plot(rangs_log, surf_decr_log, "o-")
 
 #Ajout des titres et de la grille
 plt.title("Q6 - Loi rang-taille (log-log) des terres émergées") #Titre principal
-plt.xlabel("log(Rang)")    #Titre de l'axe X
-plt.ylabel("log(Surface)") #Titre de l'axe Y
+plt.xlabel("log(Rang)")    #Titre de l'axe horizontal (X)
+plt.ylabel("log(Surface)") #Titre de l'axe vertical (Y)
 plt.grid(True)             #Ajout de la grille
 
 #Sauvegarde du résultat 
@@ -119,11 +119,12 @@ plt.close() #Fermeture 'propre' du graphe
 
 ## Question 7 ##
 # Non, on ne peut pas faire un test (statistique) sur les rangs. 
-# En effet, les rangs ne sont pas issus d'un échantillon aléatoire,
-# mais ils sont générés par une simple numérotation ordonnée (1er, 2e, 3e, ...).
-# Ainsi, on ne peut pas leur appliquer de test (comme par exemple ceux de Spearman ou Wilcoxon)
-
-
+# Les rangs ne sont pas issus d'un échantillon aléatoire, mais ils sont générés par
+# une simple numérotation ordonnée (1er, 2e, 3e, ...). 
+# En effet, nous avons créé la liste des rangs après avoir trié la liste des surfaces. 
+# La corrélation entre le rang et la taille est donc évidente, car forcée "par construction".
+# Le rang et la taille ne sont donc pas des variables indépendantes issues de mesures distinctes.
+# Cela implique qu'on ne peut pas appliquer un test de corrélation (au sens statistique) entre le rang et la taille. 
 
 
 
@@ -148,11 +149,11 @@ densite2007 = list(monde["Densité 2007"])
 densite2025 = list(monde["Densité 2025"])
 
 #OPTIONNEL: aperçu des listes créées
-#print(etats)       #État
-#print(pop2007)     #Pop 2007
-#print(pop2025)     #Pop 2025
-#print(densite2007) #Densité 2007
-#print(densite2025) #Densité 2025
+#print("etats =", etats)           #État
+#print("pop2007 =", pop2007)       #Pop 2007
+#print("pop2025 =", pop2025)       #Pop 2025
+#print("densite2007 =", densite2007) #Densité 2007
+#print("densite2025 =", densite2025) #Densité 2025
 
 
 ## Question 11 ##
@@ -163,10 +164,10 @@ ord_densite2007 = ordrePopulation(densite2007, etats) #Densité 2007 ordonnée
 ord_densite2025 = ordrePopulation(densite2025, etats) #Densité 2025 ordonnée
 
 #OPTIONNEL: aperçu des listes triées
-#print(ord_pop2007)     #Pop 2007 ordonnée
-#print(ord_pop2025)     #Pop 2025 ordonnée
-#print(ord_densite2007) #Densité 2007 ordonnéé
-#print(ord_densite2025) #Densité 2025 ordonnée
+#print("ord_pop2007 =", ord_pop2007)         #Pop 2007 ordonnée
+#print("ord_pop2025 =", ord_pop2025)         #Pop 2025 ordonnée
+#print("ord_densite2007 =", ord_densite2007) #Densité 2007 ordonnéé
+#print("ord_densite2025 ", ord_densite2025)  #Densité 2025 ordonnée
 
 
 ## Question 12 ##
@@ -179,8 +180,8 @@ compar_pop_dens_2007 = classementPays(ord_pop2007,ord_densite2007)
 compar_pop_dens_2025 = classementPays(ord_pop2025,ord_densite2025)
 
 #OPTIONNEL: aperçu des comparatifs obtenus
-#print(compar_pop_dens_2007) #pour 2007
-#print(compar_pop_dens_2025) #pour 2025
+#print("compar_pop_dens_2007 =", compar_pop_dens_2007) #pour l'année 2007
+#print("compar_pop_dens_2025 =", compar_pop_dens_2025) #pour l'année 2025
 
 
 #Le comparatif obtenu pour 2007 est ordonné par rapport à "ord_pop2007"
@@ -193,32 +194,41 @@ compar_pop_dens_2025.sort()
 
 #OPTIONNEL: aperçu des comparatifs - ordonnés par rapport à "ord_pop20XX"
 # (c.à.d par rapport au classement des États selon leurs populations)
-print(compar_pop_dens_2007) #pour 2007
-#print(compar_pop_dens_2025) #pour 2025
+#print("compar_pop_dens_2007 =", compar_pop_dens_2007) #pour l'année 2007
+#print("compar_pop_dens_2025 =", compar_pop_dens_2025) #pour l'année 2025
 
 
 ## Question 13 ##
 #Pour l'année 2007
-#On isole les colonnes
-rangs_pop_2007 = []
-rangs_densite_2007 = []
-for triplet in compar_pop_dens_2007 :
-    rangs_pop_2007.append(triplet[0])
-    rangs_densite_2007.append(triplet[1])
+#On isole les deux premières colonnes relatives aux rangs
+# (premièrement les rangs selon la population
+#          puis les rangs selon la densité    )
+rangs_pop_2007 = []     #Initialisation de la liste "rangs_pop_2007"
+rangs_densite_2007 = [] #Initialisation de la liste "rangs_densite_2007"
+#Boucle : on parcourt tout le classement "compar_pop_dens_2007" - composé de triplets
+for triplet in compar_pop_dens_2007 :    #Pour chaque triplet,   
+    rangs_pop_2007.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2007"
+    rangs_densite_2007.append(triplet[1])    #Écriture du deuxième élément dans "rang_densite_2007"
 
-print("rangs_pop_2007", rangs_pop_2007)
-print("rangs_densite_2007", rangs_densite_2007)
+#OPTIONNEL: aperçu des listes obtenues
+#print("rangs_pop_2007 =", rangs_pop_2007)         #rangs selon la population en 2007
+#print("rangs_densite_2007 =", rangs_densite_2007) #rangs selon la densitée en 2007
 
-#Pour l'année 2025
-#On isole les colonnes
-rangs_pop_2025 = []
-rangs_densite_2025 = []
-for triplet in compar_pop_dens_2025 :
-    rangs_pop_2025.append(triplet[0])
-    rangs_densite_2025.append(triplet[1])
 
-print("rangs_pop_2025", rangs_pop_2025)
-print("rangs_densite_2025", rangs_densite_2025)
+#Pour l'année 2025 (même logique)
+#On isole les deux premières colonnes relatives aux rangs
+# (premièrement les rangs selon la population
+#          puis les rangs selon la densité    )
+rangs_pop_2025 = []     #Initialisation de la liste "rangs_pop_2025"
+rangs_densite_2025 = [] #Initialisation de la liste "rangs_densite_2025"
+#Boucle : on parcourt tout le classement "compar_pop_dens_2025" - composé de triplets
+for triplet in compar_pop_dens_2025 :    #Pour chaque triplet,   
+    rangs_pop_2025.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2025"
+    rangs_densite_2025.append(triplet[1])    #Écriture du deuxième élément dans "rang_densite_2025"
+
+#OPTIONNEL: aperçu des listes obtenues
+#print("rangs_pop_2025 =", rangs_pop_2025)         #rangs selon la population en 2025
+#print("rangs_densite_2025 =", rangs_densite_2025) #rangs selon la densité en 2025
 
 
 ## Question 14 ##
