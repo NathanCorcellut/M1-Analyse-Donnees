@@ -258,7 +258,7 @@ rho_2007, p_value_spearman_2007 = scipy.stats.spearmanr(rangs_pop_2007,rangs_den
 #     p-value : c'est la probabilité qu'il n'y ait aucune corrélation entre les classements.
 #               (On note H0 l'hypothèse "nulle": H0 = "il n'y a aucune corrélation entre les classements")
 #
-#              - si p-value  < 0.05 (soit <  5%): --> on rejette l'hypothèse H0 
+#              - si p-value  < 0.05 (soit  < 5%): --> on rejette l'hypothèse H0 
 #                                                     (avec un risque de se tromper < 5%)
 #                                                 --> la corrélation observée est donc très probablement réelle 
 #                                                     (corrélation sûre à plus de 95%) 
@@ -283,7 +283,7 @@ tau_2007, p_value_kendall_2007 = scipy.stats.kendalltau(rangs_pop_2007,rangs_den
 #     p-value : c'est la probabilité qu'il n'y ait aucune concordance entre les classements.
 #               (On note H0 l'hypothèse "nulle": H0 = "il n'y a aucune concordance entre les classements")
 #
-#              - si p-value  < 0.05 (soit <  5%): --> on rejette l'hypothèse H0 
+#              - si p-value  < 0.05 (soit  < 5%): --> on rejette l'hypothèse H0 
 #                                                     (avec un risque de se tromper < 5%)
 #                                                 --> la concordance observée est donc très probablement réelle 
 #                                                     (concordance sûre à plus de 95%) 
