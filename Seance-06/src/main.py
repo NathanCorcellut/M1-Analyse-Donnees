@@ -296,7 +296,7 @@ print("tau_2007 =", tau_2007)
 print("p_value_kendall_2007 =", p_value_kendall_2007)
 
 #Interprétation
-# Pour l'année 2007, on obtient rho ~ 0.093 et tau ~ 0.067. Ces valeurs sont proches de 0, ce qui
+# Pour l'année 2007, on obtient rho = 0.093 et tau = 0.067. Ces valeurs sont proches de 0, ce qui
 # signifie qu'il n'y a ni corrélation ni concordance entre les classements selon la population et selon la densité.
 # 
 # De plus, les 'p-value' des tests de Spearman et de Kendall sont respectivement de 0.224 et 0.192, ce qui 
@@ -326,7 +326,7 @@ print("tau_2025 =", tau_2025)
 print("p_value_kendall_2025 =", p_value_kendall_2025)
 
 #Interprétation
-# Pour l'année 2025, on obtient rho ~ -0.027 et tau ~ -0.007. Ces valeurs sont quasiment nulles, ce qui
+# Pour l'année 2025, on obtient rho = -0.027 et tau = -0.007. Ces valeurs sont quasiment nulles, ce qui
 # signifie qu'il n'y a ni corrélation ni concordance entre les classements selon la population et selon la densité.
 # 
 # De plus, les 'p-value' des tests de Spearman et de Kendall sont respectivement de 0.709 et 0.877, ce qui 
