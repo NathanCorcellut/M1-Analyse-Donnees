@@ -40,15 +40,15 @@ def ordrePopulation(pop, etat):
 def classementPays(ordre1, ordre2):
     classement = []
     if len(ordre1) <= len(ordre2):
-        for element1 in range(0, len(ordre2) - 1):
-            for element2 in range(0, len(ordre1) - 1):
+        for element1 in range(0, len(ordre2)):
+            for element2 in range(0, len(ordre1)):
                 if ordre2[element1][1] == ordre1[element2][1]:
                     classement.append([ordre1[element2][0], ordre2[element1][0], ordre1[element2][1]])
     else:
-        for element1 in range(0, len(ordre1) - 1):
-            for element2 in range(0, len(ordre2) - 1):
+        for element1 in range(0, len(ordre1)):
+            for element2 in range(0, len(ordre2)):
                 if ordre2[element2][1] == ordre1[element1][1]:
-                    classement.append([ordre1[element1][0], ordre2[element2][0], ordre1[element][1]])
+                    classement.append([ordre1[element1][0], ordre2[element2][0], ordre1[element1][1]])
     return classement
 
 #Partie sur les îles
@@ -61,23 +61,25 @@ iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv"))
 #Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
 
 
+
 ## Question 3 ##
 #On isole la colonne "Surface (km²)" en la castant en list()
 surfaces = list(iles["Surface (km²)"])
-#print(surfaces) #OPTIONNEL: aperçu de la liste créée
+#print(surfaces) #OPTIONNEL: aperçu de la liste créée /!\ Affichage terminal volumineux
 
 #Ajout des valeurs de surface des continents
 surfaces.append(float(85545323)) #Asie / Afrique / Europe
 surfaces.append(float(37856841)) #Amérique
 surfaces.append(float( 7768030)) #Antarctique
 surfaces.append(float( 7605049)) #Australie
-#print(surfaces) #OPTIONNEL: aperçu de la liste complétée
+#print(surfaces) #OPTIONNEL: aperçu de la liste complétée /!\ Affichage terminal volumineux
+
 
 
 ## Question 4 ##
 #On ordonne la liste "surfaces" (de façon décroissante) 
 surfaces_decroissant = ordreDecroissant(surfaces)
-print(surfaces_decroissant) #OPTIONNEL: aperçu de la liste complétée et triée
+print(surfaces_decroissant) #OPTIONNEL: aperçu de la liste complétée et triée /!\ Affichage terminal volumineux
 
 
 
@@ -87,5 +89,6 @@ print(surfaces_decroissant) #OPTIONNEL: aperçu de la liste complétée et trié
 #Partie sur les populations des États du monde
 #Source. Depuis 2007, tous les ans jusque 2025, M. Forriez a relevé l'intégralité du nombre d'habitants dans chaque États du monde proposé par un numéro hors-série du monde intitulé États du monde. Vous avez l'évolution de la population et de la densité par année.
 #monde = pd.DataFrame(ouvrirUnFichier("./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv"))
+#print(monde) #OPTIONNEL: aperçu du tableau entier
 
 #Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().

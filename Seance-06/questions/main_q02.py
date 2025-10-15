@@ -40,15 +40,15 @@ def ordrePopulation(pop, etat):
 def classementPays(ordre1, ordre2):
     classement = []
     if len(ordre1) <= len(ordre2):
-        for element1 in range(0, len(ordre2) - 1):
-            for element2 in range(0, len(ordre1) - 1):
+        for element1 in range(0, len(ordre2)):
+            for element2 in range(0, len(ordre1)):
                 if ordre2[element1][1] == ordre1[element2][1]:
                     classement.append([ordre1[element2][0], ordre2[element1][0], ordre1[element2][1]])
     else:
-        for element1 in range(0, len(ordre1) - 1):
-            for element2 in range(0, len(ordre2) - 1):
+        for element1 in range(0, len(ordre1)):
+            for element2 in range(0, len(ordre2)):
                 if ordre2[element2][1] == ordre1[element1][1]:
-                    classement.append([ordre1[element1][0], ordre2[element2][0], ordre1[element][1]])
+                    classement.append([ordre1[element1][0], ordre2[element2][0], ordre1[element1][1]])
     return classement
 
 #Partie sur les îles
@@ -68,5 +68,6 @@ print(iles) #OPTIONNEL: aperçu du tableau entier
 #Partie sur les populations des États du monde
 #Source. Depuis 2007, tous les ans jusque 2025, M. Forriez a relevé l'intégralité du nombre d'habitants dans chaque États du monde proposé par un numéro hors-série du monde intitulé États du monde. Vous avez l'évolution de la population et de la densité par année.
 #monde = pd.DataFrame(ouvrirUnFichier("./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv"))
+#print(monde) #OPTIONNEL: aperçu du tableau entier
 
 #Attention ! Il va falloir utiliser des fonctions natives de Python dans les fonctions locales que je vous propose pour faire l'exercice. Vous devez caster l'objet Pandas en list().
