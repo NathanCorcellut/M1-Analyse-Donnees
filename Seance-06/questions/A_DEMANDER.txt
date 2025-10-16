@@ -4,7 +4,7 @@ FORTE = Ambiguité impactante sur la note
 URGENTE = Blocage à franchir absolument
 
 
-2025-10-13_18h00 : S6 Q00   : Importance MOYENNE
+2025-10-13_18h00 : S06 Q00   : Importance MOYENNE
     Dans S6/Exercice/src/main.py(version initialement donnée):
         l.43 + 44 + 48 + 49:
             enlever le '- 1' car il force à ignorer le dernier élément
@@ -12,10 +12,46 @@ URGENTE = Blocage à franchir absolument
             penser à corriger 'ordre1[element][1]' en 'ordre1[element1][1]'
                                       -------                        ^
 
-2025-10-14_18h00 : S6 cours : Importance FAIBLE
+2025-10-14_18h00 : S06 COURS : Importance FAIBLE
     Dans S6/COURS/Chap.5/p.2 sur 13:
         FAUX : 'La fonction de répartition étant la dérivée de la distribution [...]'
         VRAI : 'La distribution étant la dérivée de la fonction de répartition [...]'
 
-2025-10-15_11h23 : S6 Q14   : Importance MOYENNE
+2025-10-15_11h23 : S06 Q14   : Importance MOYENNE
     Faut-il mener l'analyse pour les années 2007 et 2025 ou seulement 2007 ?
+
+2025-10-16_11h00 : S_ALL     : Importance FORTE
+    Quand il faudra rendre le projet final, quelle est la structure que vous voulez parmi:
+        STRUCTURE 1 :
+            Seance-06
+                src
+                    data
+                        fichier.csv
+                        ...
+                    output
+                        graphe.png
+                        ...
+                    main.py
+                        ## Question 1 ##
+                        ...
+                        ## Question 2 ##
+                        ...
+                        ## BONUS ##
+                        ...
+        
+        STRUCTURE 2 :
+            Seance-06
+                    src
+                        data
+                            fichier.csv
+                            ...
+                        output
+                            graphe.png
+                            ...
+                        main.py
+                            ## Question 1 ##
+                            ...
+                            ## Question 2 ##
+                            ...
+                            ## BONUS ##
+                            ...
