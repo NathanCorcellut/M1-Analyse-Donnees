@@ -267,6 +267,7 @@ rho_2007, p_value_spearman_2007 = scipy.stats.spearmanr(rangs_pop_2007,rangs_den
 #                                                     (car on aurait un risque de se tromper >= 5%)
 #                                                 --> aucune corrélation n'est donc prouvée. Ainsi, si rho montre une corrélation, celle-ci est peut-être dûe au hasard
 #                                                     (corrélation sûre à moins de 95%)
+
 print("rho_2007 =", rho_2007)
 print("p_value_spearman_2007 =", p_value_spearman_2007)
 
@@ -292,6 +293,7 @@ tau_2007, p_value_kendall_2007 = scipy.stats.kendalltau(rangs_pop_2007,rangs_den
 #                                                     (car on aurait un risque de se tromper >= 5%)
 #                                                 --> aucune concordance n'est donc prouvée. Ainsi, si tau montre une concordance, celle-ci est peut-être dûe au hasard
 #                                                     (concordance sûre à moins de 95%)
+
 print("tau_2007 =", tau_2007)
 print("p_value_kendall_2007 =", p_value_kendall_2007)
 

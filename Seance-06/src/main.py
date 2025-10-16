@@ -267,8 +267,9 @@ rho_2007, p_value_spearman_2007 = scipy.stats.spearmanr(rangs_pop_2007,rangs_den
 #                                                     (car on aurait un risque de se tromper >= 5%)
 #                                                 --> aucune corrélation n'est donc prouvée. Ainsi, si rho montre une corrélation, celle-ci est peut-être dûe au hasard
 #                                                     (corrélation sûre à moins de 95%)
-print("rho_2007 =", rho_2007)
-print("p_value_spearman_2007 =", p_value_spearman_2007)
+
+#print("rho_2007 =", rho_2007)
+#print("p_value_spearman_2007 =", p_value_spearman_2007)
 
 # 2-Concordance
 #Calcul du coefficient de concordance tau entre les rangs selon la population en 2007
@@ -292,8 +293,9 @@ tau_2007, p_value_kendall_2007 = scipy.stats.kendalltau(rangs_pop_2007,rangs_den
 #                                                     (car on aurait un risque de se tromper >= 5%)
 #                                                 --> aucune concordance n'est donc prouvée. Ainsi, si tau montre une concordance, celle-ci est peut-être dûe au hasard
 #                                                     (concordance sûre à moins de 95%)
-print("tau_2007 =", tau_2007)
-print("p_value_kendall_2007 =", p_value_kendall_2007)
+
+#print("tau_2007 =", tau_2007)
+#print("p_value_kendall_2007 =", p_value_kendall_2007)
 
 #Interprétation
 # Pour l'année 2007, on obtient rho = 0.093 et tau = 0.067. Ces valeurs sont proches de 0, ce qui
@@ -314,16 +316,16 @@ print("p_value_kendall_2007 =", p_value_kendall_2007)
 #                                            et les rangs selon la densité en 2025
 rho_2025, p_value_spearman_2025 = scipy.stats.spearmanr(rangs_pop_2025,rangs_densite_2025)
 
-print("rho_2025 =", rho_2025)
-print("p_value_spearman_2025 =", p_value_spearman_2025)
+#print("rho_2025 =", rho_2025)
+#print("p_value_spearman_2025 =", p_value_spearman_2025)
 
 # 2-Concordance
 #Calcul du coefficient de concordance tau entre les rangs selon la population en 2025
 #                                            et les rangs selon la densité en 2025
 tau_2025, p_value_kendall_2025 = scipy.stats.kendalltau(rangs_pop_2025,rangs_densite_2025)
 
-print("tau_2025 =", tau_2025)
-print("p_value_kendall_2025 =", p_value_kendall_2025)
+#print("tau_2025 =", tau_2025)
+#print("p_value_kendall_2025 =", p_value_kendall_2025)
 
 #Interprétation
 # Pour l'année 2025, on obtient rho = -0.027 et tau = -0.007. Ces valeurs sont quasiment nulles, ce qui
@@ -336,3 +338,81 @@ print("p_value_kendall_2025 =", p_value_kendall_2025)
 # la population d'un État et sa densité de population : ce sont deux grandeurs variant indépendamment.
 #
 # N.B.:L'analyse des données de 2007 et l'analyse des données de 2025 aboutissent à cette même conclusion.
+
+
+
+## BONUS ##
+def positionDesIdentifiants(surf, ident):
+    liste_couples = []
+    for element in range(0, len(surf)):
+        liste_couples.append([float(surf[element]), ident [element]])   
+    liste_couples.sort() #Classement selon les "surf"
+    positions_idents = []
+    for element in range(0, len(liste_couples)):
+        positions_idents.append(liste_couples[element][1])
+    return positions_idents
+
+## Algorithme pour les îles ##
+
+#On propose l'algorithme suivant:
+#   DESCRIPTION DE L'ALGO
+
+print ("\033[91m LET'S GO \033[0m")
+
+deb = 0
+fin = 10
+
+
+iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
+#print(iles)
+
+surfaces = list(iles["Surface (km²)"])
+traits = list(iles["Trait de côte (km)"])
+
+
+#print("3 premieres valeurs de surfaces =", surfaces[0:3])
+#print("3 premieres valeurs de traits =", traits[0:3])
+
+
+
+# VERSION 1 = On ne modifie pas le fichier 'island.csv'
+# DONC on génère nous meme la liste des identifiants.
+
+# D'abord on garde que les données complètes:
+surf_compl = []
+trait_compl = []
+for element in range(deb, fin):
+    if (np.isnan(surfaces[element]) == False) and (np.isnan(traits[element]) == False):
+        surf_compl.append(surfaces[element])
+        trait_compl.append(traits[element])
+
+idents = list(range(1, len(surf_compl)+1))
+
+#print("3 premieres valeurs de idents =", idents[0:3])
+
+
+pos_ident_surf = positionDesIdentifiants(surf_compl, idents)
+print("pos_ident_surf[0:100] =", pos_ident_surf)
+
+pos_ident_trait = positionDesIdentifiants(trait_compl, idents)
+print("pos_ident_trait[0:100] =", pos_ident_trait)
+
+
+rho_surf_trait, p_value_spearman_surf_trait = scipy.stats.spearmanr(pos_ident_surf, pos_ident_trait)
+
+tau_surf_trait, p_value_kendall_surf_trait = scipy.stats.kendalltau(pos_ident_surf, pos_ident_trait)
+
+print("rho_surf_trait =", rho_surf_trait)
+print("p_value_spearman_surf_trait =", p_value_spearman_surf_trait)
+
+print("tau_surf_trait =", tau_surf_trait)
+print("p_value_kendall_surf_trait =", p_value_kendall_surf_trait)
+
+
+#Je sais pas si ma echnoiqueest biaisee ou pas. On va faire le calcul initial lourd avec d'abord on fait ordrePopulation avec surface et id (on s'en fout du id) 
+# puis la meme chose avec ordrePopultaion de trait de cote, et ensuite on fait le classementPays avec ces deux ordres. Mais donc il faut creer les id AVANT
+# de faire les ordrePop. Car ces comme les noms d'etats, on les a avant.
+
+# Ensuite c'est fini. Mais c'est archi long, donc on va pas faire sur toutes les valeurs mais dès le départ on s'arrete a 1000. 
+
+print ("\033[92m OK FIN BONUS \033[0m")

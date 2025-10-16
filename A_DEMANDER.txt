@@ -21,37 +21,55 @@ URGENTE = Blocage à franchir absolument
     Faut-il mener l'analyse pour les années 2007 et 2025 ou seulement 2007 ?
 
 2025-10-16_11h00 : S_ALL     : Importance FORTE
-    Quand il faudra rendre le projet final, quelle est la structure que vous voulez parmi:
-        STRUCTURE 1 :
-            Seance-06
-                src
-                    data
-                        fichier.csv
-                        ...
-                    output
-                        graphe.png
-                        ...
-                    main.py
-                        ## Question 1 ##
-                        ...
-                        ## Question 2 ##
-                        ...
-                        ## BONUS ##
-                        ...
+    Quand il faudra rendre le projet final, cette structure du fichier 'main.py' convient-elle?:
+        main.py:
+            #coding:utf8
+
+            import ...
+            ...
+            import ...
+
+            def ...
+            ...
+            def ...
+
+            ## QUESTION 1 ##
+            corps_du_code_question_1
+            ...
+
+            ## QUESTION 2 ##
+            corps_du_code_question_2
+            ...
+
+
+            ## BONUS ##
+
+            def nouvelleFonctionLocale_1() :
+                ...
+            ...
+            def nouvelleFonctionLocale_4() :
+
+            corps_du_code_Bonus
+            ...
+
+            - fin -
+
+2025-10-16_12h20 : S06 Q_ALL : Importance FORTE
+    Dans le fichier 'island-index.csv' il manque le nom d'une colonne :
+        On a :
+                        - Type -  Identifiant - Toponyme - Code ISO 1 - Code ISO 2 - Code ISO 3 - Trait de côte (km) - Surface (km²) -   Latitude - Longitude
+            ILE NORMALE -   1  - Aruba Island -    ABW   -    NaN     -    NaN     -    NaN     -         105.706524 -    181.938366 - -69.970276 - 12.509315
         
-        STRUCTURE 2 :
-            Seance-06
-                    src
-                        data
-                            fichier.csv
-                            ...
-                        output
-                            graphe.png
-                            ...
-                        main.py
-                            ## Question 1 ##
-                            ...
-                            ## Question 2 ##
-                            ...
-                            ## BONUS ##
-                            ...
+        (Ce qui rend non-pertinentes les colonnes [0], ['Type'], ['Identifiant'], ['Toponyme'])
+
+
+        On propose la modifiaction suivante : 
+                                                                                               vvvvvvvvvv
+               Type     -  Identifiant -   Toponyme   - Code ISO 1 - Code ISO 2 - Code ISO 3 - Code ISO 4 - Trait de côte (km) - Surface (km²) -   Latitude - Longitude
+            ILE NORMALE -       1      - Aruba Island -     ABW    -     NaN    -     NaN    -     NaN    -         105.706524 -    181.938366 - -69.970276 - 12.509315
+
+        (Cela rend toutes les colonnes pertinentes)
+
+        QUESTION : Peut-on faire cette modification à la main ? (Ou cela impacte votre batterie de tests? (Sachant que ça ne rend obsolète aucun code précédent.))
+                   Ou bien on laisse le fichier comme tel, et on génère nous même une liste d'identifiants ? 
+
