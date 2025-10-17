@@ -347,7 +347,7 @@ tau_2025, p_value_kendall_2025 = scipy.stats.kendalltau(rangs_pop_2025,rangs_den
 #On propose l'algorithme suivant:
 #   DESCRIPTION DE L'ALGO
 
-print ("\033[91m LET'S GO \033[0m")
+print ("\033[91m DEPART : METHODE REFLECHIE \033[0m")
 
 # VERSION 1 = On ne modifie pas le fichier 'island.csv'
 # DONC on génère nous meme la liste des identifiants.
@@ -417,6 +417,9 @@ print ("\033[91m LET'S GO \033[0m")
 #     for j in range (84000) :
 #         nombre de passage ici = 84 000 * 84 000 = 7 056 000 000
 
+import time
+
+debut = time.time()
 s = list(iles["Surface (km²)"])
 t =   list(iles["Trait de côte (km)"])
 
@@ -441,11 +444,16 @@ rho_s_t, p_value_spearman_s_t = scipy.stats.spearmanr(rangs_s,rangs_t)
 
 tau_s_t, p_value_kendall_s_t = scipy.stats.kendalltau(rangs_s,rangs_t)
 
+
+
 print("rho_s_t =", rho_s_t)
 print("p_value_spearman_s_t =", p_value_spearman_s_t)
 
 print("tau_s_t =", tau_s_t)
 print("p_value_kendall_s_t =", p_value_kendall_s_t)
+
+fin = time.time()
+print("tps exec =", fin-debut)
 
 # RESULTATS DE LA METHODE REFLECHIE :
 # rho_s_t = 0.9712866815534842
@@ -453,6 +461,41 @@ print("p_value_kendall_s_t =", p_value_kendall_s_t)
 # tau_s_t = 0.8539337169239855
 # p_value_kendall_s_t = 0.0
 #
-# TEMPS DE CALCUL : < 1 secondes (sot)
+# TEMPS DE CALCUL : 0.333 secondes
 
-print ("\033[92m OK FIN BONUS \033[0m")
+print ("\033[92m CALCUL TERMINÉ EN", str(((fin-debut)//0.001)/1000), "SECONDES ! \033[0m")
+
+
+
+
+
+## C'est parti on continue avec notre Restaurant préféré : KRUSTY le CLOWN !!!
+
+## Partie population Mondiale :
+
+def calculCorrelationConcordance(nom_chemin_fichier, nom_colonne_1, nom_colonne_2, nom_colonne_id):
+    tableau = pd.DataFrame(ouvrirUnFichier(nom_chemin_fichier))
+    colonne_1 =  list(tableau[nom_colonne_1])
+    colonne_2 =  list(tableau[nom_colonne_2])
+    colonne_id = list(tableau[nom_colonne_id])
+
+    #On ordonne les listes de manière décroissante
+    ord_col1 = ordrePopulation(colonne_1, colonne_id)
+    ord_col2 = ordrePopulation(colonne_2, colonne_id)
+
+    #On compare
+    compar_1_2 = classementPays(ord_col1,ord_col2)
+
+    #On trie la comparaison
+    compar_1_2.sort()
+
+    rangs_col_1 = []  #Initialisation 
+    rangs_col_2 = [] 
+    #Boucle : 
+    for triplet in compar_1_2 :    #Pour chaque triplet,   
+        rangs_col_1.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2007"
+        rangs_col_2.append(triplet[1])    
+
+    rho, p_value_spearman = scipy.stats.spearmanr(rangs_col_1,rangs_col_2)
+    tau, p_value_kendall = scipy.stats.kendalltau(rangs_col_1,rangs_col_2)
+    return (rho, p_value_spearman, tau, p_value_kendall)
