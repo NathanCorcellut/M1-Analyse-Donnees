@@ -473,8 +473,8 @@ print ("\033[92m CALCUL TERMINÉ EN", str(((fin-debut)//0.001)/1000), "SECONDES 
 
 ## Partie population Mondiale :
 
-def calculCorrelationConcordance(nom_chemin_fichier, nom_colonne_1, nom_colonne_2, nom_colonne_id):
-    tableau = pd.DataFrame(ouvrirUnFichier(nom_chemin_fichier))
+def calculCorrelationConcordance(chemin_fichier, nom_colonne_1, nom_colonne_2, nom_colonne_id):
+    tableau = pd.DataFrame(ouvrirUnFichier(chemin_fichier))
     colonne_1 =  list(tableau[nom_colonne_1])
     colonne_2 =  list(tableau[nom_colonne_2])
     colonne_id = list(tableau[nom_colonne_id])
@@ -496,13 +496,22 @@ def calculCorrelationConcordance(nom_chemin_fichier, nom_colonne_1, nom_colonne_
         rangs_col_1.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2007"
         rangs_col_2.append(triplet[1])    
 
-    rho, p_value_spearman = scipy.stats.spearmanr(rangs_col_1,rangs_col_2)
-    tau, p_value_kendall = scipy.stats.kendalltau(rangs_col_1,rangs_col_2)
-    return (rho, p_value_spearman, tau, p_value_kendall)
+    coeff_correl_spearman, p_value_spearman = scipy.stats.spearmanr(rangs_col_1,rangs_col_2)
+    coeff_concord_kendall, p_value_kendall = scipy.stats.kendalltau(rangs_col_1,rangs_col_2)
+    return (coeff_correl_spearman, p_value_spearman, coeff_concord_kendall, p_value_kendall)
 
-a,b,c,d = calculCorrelationConcordance("./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv",
-                                       "Pop 2007",
-                                       "Densité 2007",
-                                       "État")
 
-print(a,b,c,d)
+valeurs = []
+for annee in range(2007, 2026):
+    chemin_fichier = "./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv"
+    nom_col_1 = "Pop " + str(annee)
+    nom_col_2 = "Densité " +str(annee)
+    rho, p_value_spearman, tau, p_value_kendall = calculCorrelationConcordance(chemin_fichier, nom_col_1, nom_col_2, "État")
+    valeurs.append([annee, rho, p_value_spearman, tau, p_value_kendall])
+
+print("ANNÉE \t Coeff_Correl_Spearman \t p-value_Spearman \t Coeff_Concord_Kendall \t p-value_Kendall")
+for ligne in range(0, len(valeurs)):
+    print(str(valeurs[ligne][1]) + "\t " +
+          str(valeurs[ligne][2]) + "\t " +
+          str(valeurs[ligne][3]) + "\t " +
+          str(valeurs[ligne][4]))
