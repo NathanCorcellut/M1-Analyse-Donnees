@@ -175,7 +175,7 @@ ord_densite2025 = ordrePopulation(densite2025, etats) #Densité 2025 ordonnée
 #print("ord_pop2007 =", ord_pop2007)         #Pop 2007 ordonnée
 #print("ord_pop2025 =", ord_pop2025)         #Pop 2025 ordonnée
 #print("ord_densite2007 =", ord_densite2007) #Densité 2007 ordonnée
-#print("ord_densite2025 =", ord_densite2025)  #Densité 2025 ordonnée
+#print("ord_densite2025 =", ord_densite2025) #Densité 2025 ordonnée
 
 
 
@@ -342,109 +342,51 @@ tau_2025, p_value_kendall_2025 = scipy.stats.kendalltau(rangs_pop_2025,rangs_den
 
 
 ## BONUS ##
-def positionDesIdentifiants(surf, ident):
-    liste_couples = []
-    for element in range(0, len(surf)):
-        liste_couples.append([float(surf[element]), ident [element]])   
-    liste_couples.sort() #Classement selon les "surf"
-    positions_idents = []
-    for element in range(0, len(liste_couples)):
-        positions_idents.append(liste_couples[element][1])
-    return positions_idents
 
 ## Algorithme pour les îles ##
-
 #On propose l'algorithme suivant:
 #   DESCRIPTION DE L'ALGO
 
 print ("\033[91m LET'S GO \033[0m")
 
-iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
-#print(iles)
-
-surfaces = list(iles["Surface (km²)"])
-traits = list(iles["Trait de côte (km)"])
-
-
-#print("3 premieres valeurs de surfaces =", surfaces[0:3])
-#print("3 premieres valeurs de traits =", traits[0:3])
-
-
-
 # VERSION 1 = On ne modifie pas le fichier 'island.csv'
 # DONC on génère nous meme la liste des identifiants.
 
-# D'abord on garde que les données complètes:
-surf_compl = []
-trait_compl = []
-for element in range(0, len(surfaces)):
-    if (np.isnan(surfaces[element]) == False) and (np.isnan(traits[element]) == False):
-        surf_compl.append(surfaces[element])
-        trait_compl.append(traits[element])
-
-idents = list(range(1, len(surf_compl)+1))
-
-#print("3 premieres valeurs de idents =", idents[0:3])
-
-
-pos_ident_surf = positionDesIdentifiants(surf_compl, idents)
-print("pos_ident_surf[0:100] =", pos_ident_surf)
-
-pos_ident_trait = positionDesIdentifiants(trait_compl, idents)
-print("pos_ident_trait[0:100] =", pos_ident_trait)
-
-
-rho_surf_trait, p_value_spearman_surf_trait = scipy.stats.spearmanr(pos_ident_surf, pos_ident_trait)
-
-tau_surf_trait, p_value_kendall_surf_trait = scipy.stats.kendalltau(pos_ident_surf, pos_ident_trait)
-
-print("rho_surf_trait =", rho_surf_trait)
-print("p_value_spearman_surf_trait =", p_value_spearman_surf_trait)
-
-print("tau_surf_trait =", tau_surf_trait)
-print("p_value_kendall_surf_trait =", p_value_kendall_surf_trait)
-
-
-#Je sais pas si ma technoique est biaisee ou pas. On va faire le calcul initial lourd avec d'abord on fait ordrePopulation avec surface et id (on s'en fout du id) 
-# puis la meme chose avec ordrePopultaion de trait de cote, et ensuite on fait le classementPays avec ces deux ordres. Mais donc il faut creer les id AVANT
-# de faire les ordrePop. Car ces comme les noms d'etats, on les a avant.
-
-# Ensuite c'est fini. Mais c'est archi long, donc on va pas faire sur toutes les valeurs mais dès le départ on s'arrete a 1000. 
-
-print ("\033[91m ON RECOMMENCE \033[0m")
+#Ouverture du fichier "island-index.csv"
 iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
+#print(iles) #OPTIONNEL: aperçu du tableau entier
 
-
+#On isole les colonnes "Surface" et "Trait de côte"
 surfaces = list(iles["Surface (km²)"])
-traits = list(iles["Trait de côte (km)"])
-idents = list(range(1, len(surf_compl)+1))
+traits =   list(iles["Trait de côte (km)"])
+#On crée la liste des identifiants (de même taille que les colonnes isolées)
+idents = list(range(1, len(surfaces)+1))
 
+#OPTIONNEL: aperçu des 10 premières valeurs des listes obtenues
+#print("surfaces[0:10] =", surfaces[0:10]) #10 premières valeurs de 'surfaces'
+#print("traits[0:10]   =", traits[0:10])   #10 premières valeurs de 'traits'
+#print("idents[0:10]   =", idents[0:10])   #10 premières valeurs de 'idents'
 
+#On ordonne les listes de manière décroissante
+ord_surf =  ordrePopulation(surfaces, idents)
+ord_trait = ordrePopulation(traits,   idents)
 
-ord_srf = ordrePopulation(srf, id)
-print("ord_srf =", ord_srf)
-ord_tra = ordrePopulation(tra, id)
-print("ord_tra =", ord_tra)
+print("ord_surf  =",  ord_surf)
+print("ord_trait =", ord_trait)
 
-compar_srf_tra = classementPays(ord_srf,ord_tra)
+compar_surf_trait= classementPays(ord_surf, ord_trait)
 
-compar_srf_tra.sort()
+compar_surf_trait.sort()
+print("compar_surf_trait =", compar_surf_trait)
 
-rangs_srf = []     #Initialisation de la liste "rangs_pop_2007"
-rangs_tra = [] #Initialisation de la liste "rangs_densite_2007"
+rangs_surf = []  #Initialisation de la liste des rangs des surfaces
+rangs_trait = [] #Initialisation de la liste des rangs des traits
 #Boucle : on parcourt tout le classement "compar_pop_dens_2007" - composé de triplets
-for triplet in compar_srf_tra :    #Pour chaque triplet,   
-    rangs_srf.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2007"
-    rangs_tra.append(triplet[1]) 
+for triplet in compar_surf_trait :    #Pour chaque triplet,   
+    rangs_surf.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2007"
+    rangs_trait.append(triplet[1]) 
 
-rho_srf_tra, p_value_spearman_srf_tra = scipy.stats.spearmanr(rangs_srf,rangs_tra)
-
-#print("rho_2025 =", rho_2025)
-#print("p_value_spearman_2025 =", p_value_spearman_2025)
-
-# 2-Concordance
-#Calcul du coefficient de concordance tau entre les rangs selon la population en 2025
-#                                            et les rangs selon la densité en 2025
+rho_surf_trait, p_value_spearman_surf_trait = scipy.stats.spearmanr(rangs_surf,rangs_trait)
 
 tau_srf_tra, p_value_kendall_srf_tra = scipy.stats.kendalltau(rangs_srf,rangs_tra)
 
@@ -454,6 +396,7 @@ print("p_value_spearman_srf_tra =", p_value_spearman_srf_tra)
 print("tau_srf_tra =", tau_srf_tra)
 print("p_value_kendall_srf_tra =", p_value_kendall_srf_tra)
 
-
+monde = pd.DataFrame(ouvrirUnFichier("./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv"))
+print(list(monde))
 
 print ("\033[92m OK FIN BONUS \033[0m")

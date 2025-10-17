@@ -175,7 +175,7 @@ ord_densite2025 = ordrePopulation(densite2025, etats) #Densité 2025 ordonnée
 #print("ord_pop2007 =", ord_pop2007)         #Pop 2007 ordonnée
 #print("ord_pop2025 =", ord_pop2025)         #Pop 2025 ordonnée
 #print("ord_densite2007 =", ord_densite2007) #Densité 2007 ordonnée
-#print("ord_densite2025 =", ord_densite2025)  #Densité 2025 ordonnée
+#print("ord_densite2025 =", ord_densite2025) #Densité 2025 ordonnée
 
 
 
