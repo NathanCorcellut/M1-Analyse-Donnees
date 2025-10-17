@@ -352,51 +352,107 @@ print ("\033[91m LET'S GO \033[0m")
 # VERSION 1 = On ne modifie pas le fichier 'island.csv'
 # DONC on génère nous meme la liste des identifiants.
 
-#Ouverture du fichier "island-index.csv"
-iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
-#print(iles) #OPTIONNEL: aperçu du tableau entier
 
-#On isole les colonnes "Surface" et "Trait de côte"
-surfaces = list(iles["Surface (km²)"])
-traits =   list(iles["Trait de côte (km)"])
-#On crée la liste des identifiants (de même taille que les colonnes isolées)
-idents = list(range(1, len(surfaces)+1))
+# METHODE 1 : METHODE RUSSE = On lance le même programme : ARCHI CHRONOPHAGE
+#                                                          Compléxité quadratique !
+###Ouverture du fichier "island-index.csv"
+##iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
+###print(iles) #OPTIONNEL: aperçu du tableau entier
+##
+###On isole les colonnes "Surface" et "Trait de côte"
+##surfaces = list(iles["Surface (km²)"])
+##traits =   list(iles["Trait de côte (km)"])
+##
+##limite = 1000
+##surfaces = surfaces[0:limite]
+##traits = traits[0:limite]
+###On crée la liste des identifiants (de même taille que les colonnes isolées)
+##idents = list(range(1, len(surfaces)+1))
+##
+###OPTIONNEL: aperçu des 10 premières valeurs des listes obtenues
+###print("surfaces[0:10] =", surfaces[0:10]) #10 premières valeurs de 'surfaces'
+###print("traits[0:10]   =", traits[0:10])   #10 premières valeurs de 'traits'
+###print("idents[0:10]   =", idents[0:10])   #10 premières valeurs de 'idents'
+##
+###On ordonne les listes de manière décroissante
+##ord_surf =  ordrePopulation(surfaces, idents)
+##ord_trait = ordrePopulation(traits,   idents)
+##
+##print("ord_surf  =",  ord_surf)
+##print("ord_trait =", ord_trait)
+##
+##compar_surf_trait= classementPays(ord_surf, ord_trait)
+##
+##compar_surf_trait.sort()
+##print("compar_surf_trait =", compar_surf_trait)
+##
+##rangs_surf = []  #Initialisation de la liste des rangs des surfaces
+##rangs_trait = [] #Initialisation de la liste des rangs des traits
+###Boucle : on parcourt tout le classement "compar_pop_dens_2007" - composé de triplets
+##for triplet in compar_surf_trait :    #Pour chaque triplet,   
+##    rangs_surf.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2007"
+##    rangs_trait.append(triplet[1]) 
+##
+##rho_surf_trait, p_value_spearman_surf_trait = scipy.stats.spearmanr(rangs_surf,rangs_trait)
+##
+##tau_surf_trait, p_value_kendall_surf_trait = scipy.stats.kendalltau(rangs_surf,rangs_trait)
+##
+##print("rho_surf_trait =", rho_surf_trait)
+##print("p_value_spearman_surf_trait =", p_value_spearman_surf_trait)
+##
+##print("tau_surf_trait =", tau_surf_trait)
+##print("p_value_kendall_surf_trait =", p_value_kendall_surf_trait)
 
-#OPTIONNEL: aperçu des 10 premières valeurs des listes obtenues
-#print("surfaces[0:10] =", surfaces[0:10]) #10 premières valeurs de 'surfaces'
-#print("traits[0:10]   =", traits[0:10])   #10 premières valeurs de 'traits'
-#print("idents[0:10]   =", idents[0:10])   #10 premières valeurs de 'idents'
+# RESULTATS DE LA METHODE RUSSE :
+# rho_surf_trait = 0.9712866815534842
+# p_value_spearman_surf_trait = 0.0
+# tau_surf_trait = 0.8539337169239855
+# p_value_kendall_surf_trait = 0.0
+#
+# TEMPS DE CALCUL : > 20 minutes
 
-#On ordonne les listes de manière décroissante
-ord_surf =  ordrePopulation(surfaces, idents)
-ord_trait = ordrePopulation(traits,   idents)
+# METHODE 2 : METHODE REFLECHIE
+# On cherche coute que coute à ne pas faire de 'recherche carrée' càd :
+# for i in range (84000) :
+#     for j in range (84000) :
+#         nombre de passage ici = 84 000 * 84 000 = 7 056 000 000
 
-print("ord_surf  =",  ord_surf)
-print("ord_trait =", ord_trait)
+s = list(iles["Surface (km²)"])
+t =   list(iles["Trait de côte (km)"])
 
-compar_surf_trait= classementPays(ord_surf, ord_trait)
+couple_t_s = []
+for i in range(0, len(s)):
+    if (np.isnan(t[i]) == False) and (np.isnan(s[i]) == False):
+        couple_t_s.append([t[i], s[i]])
 
-compar_surf_trait.sort()
-print("compar_surf_trait =", compar_surf_trait)
+couple_t_s.sort()
+class_1 = []
+for i in range(0,len(couple_t_s)):
+    class_1.append([couple_t_s[i][1],couple_t_s[i][0],i+1])
 
-rangs_surf = []  #Initialisation de la liste des rangs des surfaces
-rangs_trait = [] #Initialisation de la liste des rangs des traits
-#Boucle : on parcourt tout le classement "compar_pop_dens_2007" - composé de triplets
-for triplet in compar_surf_trait :    #Pour chaque triplet,   
-    rangs_surf.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2007"
-    rangs_trait.append(triplet[1]) 
+class_1.sort()
+rangs_s=[]
+rangs_t=[]
+for i in range(0, len(class_1)):
+    rangs_s.append(i+1)
+    rangs_t.append(class_1[i][2])
 
-rho_surf_trait, p_value_spearman_surf_trait = scipy.stats.spearmanr(rangs_surf,rangs_trait)
+rho_s_t, p_value_spearman_s_t = scipy.stats.spearmanr(rangs_s,rangs_t)
 
-tau_srf_tra, p_value_kendall_srf_tra = scipy.stats.kendalltau(rangs_srf,rangs_tra)
+tau_s_t, p_value_kendall_s_t = scipy.stats.kendalltau(rangs_s,rangs_t)
 
-print("rho_srf_tra =", rho_srf_tra)
-print("p_value_spearman_srf_tra =", p_value_spearman_srf_tra)
+print("rho_s_t =", rho_s_t)
+print("p_value_spearman_s_t =", p_value_spearman_s_t)
 
-print("tau_srf_tra =", tau_srf_tra)
-print("p_value_kendall_srf_tra =", p_value_kendall_srf_tra)
+print("tau_s_t =", tau_s_t)
+print("p_value_kendall_s_t =", p_value_kendall_s_t)
 
-monde = pd.DataFrame(ouvrirUnFichier("./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv"))
-print(list(monde))
+# RESULTATS DE LA METHODE REFLECHIE :
+# rho_s_t = 0.9712866815534842
+# p_value_spearman_s_t = 0.0
+# tau_s_t = 0.8539337169239855
+# p_value_kendall_s_t = 0.0
+#
+# TEMPS DE CALCUL : < 1 secondes (sot)
 
 print ("\033[92m OK FIN BONUS \033[0m")
