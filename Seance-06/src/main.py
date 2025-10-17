@@ -499,3 +499,10 @@ def calculCorrelationConcordance(nom_chemin_fichier, nom_colonne_1, nom_colonne_
     rho, p_value_spearman = scipy.stats.spearmanr(rangs_col_1,rangs_col_2)
     tau, p_value_kendall = scipy.stats.kendalltau(rangs_col_1,rangs_col_2)
     return (rho, p_value_spearman, tau, p_value_kendall)
+
+a,b,c,d = calculCorrelationConcordance("./data/Le-Monde-HS-Etats-du-monde-2007-2025.csv",
+                                       "Pop 2007",
+                                       "Densité 2007",
+                                       "État")
+
+print(a,b,c,d)
