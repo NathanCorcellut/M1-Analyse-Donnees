@@ -359,10 +359,6 @@ def positionDesIdentifiants(surf, ident):
 
 print ("\033[91m LET'S GO \033[0m")
 
-deb = 0
-fin = 10
-
-
 iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
 #print(iles)
 
@@ -381,7 +377,7 @@ traits = list(iles["Trait de côte (km)"])
 # D'abord on garde que les données complètes:
 surf_compl = []
 trait_compl = []
-for element in range(deb, fin):
+for element in range(0, len(surfaces)):
     if (np.isnan(surfaces[element]) == False) and (np.isnan(traits[element]) == False):
         surf_compl.append(surfaces[element])
         trait_compl.append(traits[element])
@@ -409,10 +405,55 @@ print("tau_surf_trait =", tau_surf_trait)
 print("p_value_kendall_surf_trait =", p_value_kendall_surf_trait)
 
 
-#Je sais pas si ma echnoiqueest biaisee ou pas. On va faire le calcul initial lourd avec d'abord on fait ordrePopulation avec surface et id (on s'en fout du id) 
+#Je sais pas si ma technoique est biaisee ou pas. On va faire le calcul initial lourd avec d'abord on fait ordrePopulation avec surface et id (on s'en fout du id) 
 # puis la meme chose avec ordrePopultaion de trait de cote, et ensuite on fait le classementPays avec ces deux ordres. Mais donc il faut creer les id AVANT
 # de faire les ordrePop. Car ces comme les noms d'etats, on les a avant.
 
 # Ensuite c'est fini. Mais c'est archi long, donc on va pas faire sur toutes les valeurs mais dès le départ on s'arrete a 1000. 
+
+print ("\033[91m ON RECOMMENCE \033[0m")
+iles = pd.DataFrame(ouvrirUnFichier("./data/island-index.csv")) 
+
+
+surfaces = list(iles["Surface (km²)"])
+traits = list(iles["Trait de côte (km)"])
+idents = list(range(1, len(surf_compl)+1))
+
+
+
+ord_srf = ordrePopulation(srf, id)
+print("ord_srf =", ord_srf)
+ord_tra = ordrePopulation(tra, id)
+print("ord_tra =", ord_tra)
+
+compar_srf_tra = classementPays(ord_srf,ord_tra)
+
+compar_srf_tra.sort()
+
+rangs_srf = []     #Initialisation de la liste "rangs_pop_2007"
+rangs_tra = [] #Initialisation de la liste "rangs_densite_2007"
+#Boucle : on parcourt tout le classement "compar_pop_dens_2007" - composé de triplets
+for triplet in compar_srf_tra :    #Pour chaque triplet,   
+    rangs_srf.append(triplet[0])        #Écriture du premier  élément dans "rang_pop_2007"
+    rangs_tra.append(triplet[1]) 
+
+rho_srf_tra, p_value_spearman_srf_tra = scipy.stats.spearmanr(rangs_srf,rangs_tra)
+
+#print("rho_2025 =", rho_2025)
+#print("p_value_spearman_2025 =", p_value_spearman_2025)
+
+# 2-Concordance
+#Calcul du coefficient de concordance tau entre les rangs selon la population en 2025
+#                                            et les rangs selon la densité en 2025
+
+tau_srf_tra, p_value_kendall_srf_tra = scipy.stats.kendalltau(rangs_srf,rangs_tra)
+
+print("rho_srf_tra =", rho_srf_tra)
+print("p_value_spearman_srf_tra =", p_value_spearman_srf_tra)
+
+print("tau_srf_tra =", tau_srf_tra)
+print("p_value_kendall_srf_tra =", p_value_kendall_srf_tra)
+
+
 
 print ("\033[92m OK FIN BONUS \033[0m")
