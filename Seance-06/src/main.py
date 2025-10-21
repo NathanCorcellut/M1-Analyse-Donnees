@@ -347,7 +347,7 @@ tau_2025, p_value_kendall_2025 = scipy.stats.kendalltau(rangs_pop_2025,rangs_den
 #On propose l'algorithme suivant:
 #   DESCRIPTION DE L'ALGO
 
-print ("\033[91m DEPART : METHODE REFLECHIE \033[0m")
+
 
 # VERSION 1 = On ne modifie pas le fichier 'island.csv'
 # DONC on génère nous meme la liste des identifiants.
@@ -416,6 +416,8 @@ print ("\033[91m DEPART : METHODE REFLECHIE \033[0m")
 # for i in range (84000) :
 #     for j in range (84000) :
 #         nombre de passage ici = 84 000 * 84 000 = 7 056 000 000
+
+print ("\033[91m DEPART : METHODE REFLECHIE \033[0m")
 
 import time
 
@@ -511,7 +513,8 @@ for annee in range(2007, 2026):
 
 print("ANNÉE \t Coeff_Correl_Spearman \t p-value_Spearman \t Coeff_Concord_Kendall \t p-value_Kendall")
 for ligne in range(0, len(valeurs)):
-    print(str(valeurs[ligne][1]) + "\t " +
+    print(str(valeurs[ligne][0]) + "\t " +
+          str(valeurs[ligne][1]) + "\t " +
           str(valeurs[ligne][2]) + "\t " +
           str(valeurs[ligne][3]) + "\t " +
           str(valeurs[ligne][4]))
