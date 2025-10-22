@@ -73,3 +73,8 @@ URGENTE = Blocage à franchir absolument
         QUESTION : Peut-on faire cette modification à la main ? (Ou cela impacte votre batterie de tests? (Sachant que ça ne rend obsolète aucun code précédent.))
                    Ou bien on laisse le fichier comme tel, et on génère nous même une liste d'identifiants ? 
 
+2025-10-22_11h10 : S_ALL     : Importance FORTE
+    Est-ce qu'on laisse tous nos "print" actifs ? 
+    Ou on les commente comme n'importe quel commentaire ?
+    Ou est-ce qu'on les commente différemment pour que vous les identifiiez immédiatement ?
+
