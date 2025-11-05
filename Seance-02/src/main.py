@@ -94,13 +94,35 @@ print(inscrits)
 # Pour chaque colonne :
 #   isoler la colonne et cast en list
 #   faire pd.sum de cette list
-#   
+#
+colonnes = table.head(0)
+liste_sommes = []
+for nom_colonne in colonnes :
+    new_col = table[nom_colonne]
+    liste_sommes.append(new_col.sum())
 
+
+print(liste_sommes)
 
 # Pour chaque colonne :
 #   si le type de cette colonne est int ou float :
 #       isoler la colonne et cast en list
 #       faire pd.sum de cette list
+
+idx = table ["Code du département"]
+X = table ["Inscrits"]
+Y = table ["Abstentions"]
+for i in range(len(idx)):
+
+    plt.bar(["Inscrits", "Votants"], [X[i], Y[i]])
+    #Ajout des titres et de la grille
+    plt.title("Inscrits VS Votants dans le {}".format(idx[i])) #Titre principal
+    plt.ylabel("Nombre") #Titre de l'axe vertical (Y)
+    plt.grid(True)              #Ajout de la grille
+
+    #Sauvegarde du résultat 
+    plt.savefig("./output/departement_{}.png".format(idx[i])) #sous le nom "Q5-loi_rang-taille_terres.png"
+    plt.close() #Fermeture 'propre' du graphe   
 
 # 12
 ## 13
