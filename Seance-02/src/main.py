@@ -94,20 +94,23 @@ print(inscrits)
 # Pour chaque colonne :
 #   isoler la colonne et cast en list
 #   faire pd.sum de cette list
-#
-colonnes = table.head(0)
-liste_sommes = []
-for nom_colonne in colonnes :
-    new_col = table[nom_colonne]
-    liste_sommes.append(new_col.sum())
 
+colonnes = table.columns
+liste_sommes = []
+for i in range(len(colonnes)):
+    new_col = table[colonnes[i]]
+
+    if types_colonnes[i] == int:
+        liste_sommes.append(int(new_col.sum()))
+    
+    elif types_colonnes[i] == float:
+        liste_sommes.append(float(new_col.sum()))
 
 print(liste_sommes)
 
-# Pour chaque colonne :
-#   si le type de cette colonne est int ou float :
-#       isoler la colonne et cast en list
-#       faire pd.sum de cette list
+
+
+## Question 11
 
 idx = table ["Code du département"]
 X = table ["Inscrits"]
@@ -121,9 +124,50 @@ for i in range(len(idx)):
     plt.grid(True)              #Ajout de la grille
 
     #Sauvegarde du résultat 
-    plt.savefig("./output/departement_{}.png".format(idx[i])) #sous le nom "Q5-loi_rang-taille_terres.png"
+    plt.savefig("./output/images_Q11/ins_vs_vot_dep_{}.png".format(idx[i])) #sous le nom "Q5-loi_rang-taille_terres.png"
     plt.close() #Fermeture 'propre' du graphe   
 
-# 12
+
+
+
+## Question 12
+
+idx = table ["Code du département"]
+Blan = table ["Blancs"]
+Nuls = table ["Nuls"]
+Expr = table ["Exprimés"]
+Abst = table ["Abstentions"]
+for i in range(len(idx)):
+
+    va
+
+    plt.pie(["Inscrits", "Votants"], [X[i], Y[i]])
+    #Ajout des titres et de la grille
+    plt.title("Inscrits VS Votants dans le {}".format(idx[i])) #Titre principal
+    plt.ylabel("Nombre") #Titre de l'axe vertical (Y)
+    plt.grid(True)              #Ajout de la grille
+
+    #Sauvegarde du résultat 
+    plt.savefig("./output/images_Q12/ins_vs_vot_dep_{}.png".format(idx[i])) #sous le nom "Q5-loi_rang-taille_terres.png"
+    plt.close() #Fermeture 'propre' du graphe   
+
+
+
+# Données d'exemple
+y = ["A", "B", "C", "D"]
+x = [15, 30, 45, 10]
+
+# Création du graphique circulaire
+plt.pie(x, labels=y, autopct="%1.1f%%")
+
+# Ajout de titre
+plt.title("Exemple de graphique circulaire")
+
+# Affichage de la figure (surtout utile, si MPL est utilisé de manière standalone)
+plt.grid(True)              #Ajout de la grille
+
+#Sauvegarde du résultat 
+plt.savefig("./ins_vs_vot_dep.png") #sous le nom "Q5-loi_rang-taille_terres.png"
+plt.close() #Fermeture 'propre' du graphe 
 ## 13
 ### 14 Diagrammes en barres MAthplotlib
