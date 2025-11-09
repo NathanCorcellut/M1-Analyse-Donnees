@@ -217,11 +217,11 @@ for surface in surfaces:
     else :
         compte_10000_INF += 1
 
-print("Entre 0 et 10km², on dénombre {} îles.".format(compte_0_10))
-print("Entre 10 et 25km², on dénombre {} îles.".format(compte_0_10))
-print("Entre 25 et 50km², on dénombre {} îles.".format(compte_0_10))
-print("Entre 50 et 100km², on dénombre {} îles.".format(compte_0_10))
-print("Entre 100 et 2 500km², on dénombre {} îles.".format(compte_0_10))
-print("Entre 2 500 et 5 000km², on dénombre {} îles.".format(compte_0_10))
-print("Entre 5 000 et 10 000km², on dénombre {} îles.".format(compte_0_10))
-print("Au delà de 10 000km², on dénombre {} îles.".format(compte_0_10))
+print("Entre 0 et 10km², on dénombre {} îles."        .format(compte_0_10))
+print("Entre 10 et 25km², on dénombre {} îles."       .format(compte_10_25))
+print("Entre 25 et 50km², on dénombre {} îles."       .format(compte_25_50))
+print("Entre 50 et 100km², on dénombre {} îles."      .format(compte_50_100))
+print("Entre 100 et 2 500km², on dénombre {} îles."   .format(compte_100_2500))
+print("Entre 2 500 et 5 000km², on dénombre {} îles." .format(compte_2500_5000))
+print("Entre 5 000 et 10 000km², on dénombre {} îles.".format(compte_5000_10000))
+print("Au delà de 10 000km², on dénombre {} îles."    .format(compte_10000_INF))
