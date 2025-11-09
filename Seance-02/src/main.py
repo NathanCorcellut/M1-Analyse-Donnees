@@ -132,42 +132,57 @@ for i in range(len(idx)):
 
 ## Question 12
 
-idx = table ["Code du département"]
-Blan = table ["Blancs"]
-Nuls = table ["Nuls"]
-Expr = table ["Exprimés"]
-Abst = table ["Abstentions"]
-for i in range(len(idx)):
+# SEE MAELYS FILE
 
-    va
-
-    plt.pie(["Inscrits", "Votants"], [X[i], Y[i]])
-    #Ajout des titres et de la grille
-    plt.title("Inscrits VS Votants dans le {}".format(idx[i])) #Titre principal
-    plt.ylabel("Nombre") #Titre de l'axe vertical (Y)
-    plt.grid(True)              #Ajout de la grille
-
-    #Sauvegarde du résultat 
-    plt.savefig("./output/images_Q12/ins_vs_vot_dep_{}.png".format(idx[i])) #sous le nom "Q5-loi_rang-taille_terres.png"
-    plt.close() #Fermeture 'propre' du graphe   
-
-
-
-# Données d'exemple
-y = ["A", "B", "C", "D"]
-x = [15, 30, 45, 10]
-
-# Création du graphique circulaire
-plt.pie(x, labels=y, autopct="%1.1f%%")
-
-# Ajout de titre
-plt.title("Exemple de graphique circulaire")
-
-# Affichage de la figure (surtout utile, si MPL est utilisé de manière standalone)
-plt.grid(True)              #Ajout de la grille
-
-#Sauvegarde du résultat 
-plt.savefig("./ins_vs_vot_dep.png") #sous le nom "Q5-loi_rang-taille_terres.png"
-plt.close() #Fermeture 'propre' du graphe 
 ## 13
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from math import ceil
+
+
+n = len(inscrits)
+
+# Freedman-Diaconis pour nb de bins (optionnel)
+iqr = inscrits.quantile(0.75) - inscrits.quantile(0.25)
+if iqr == 0:
+    nb_bins = 56
+else:
+    h = 2 * iqr / (n ** (1/3))
+    if h <= 0:
+        nb_bins = 30
+    else:
+        nb_bins = int(ceil((inscrits.max() - inscrits.min()) / h))
+
+# Tracé de l'histogramme normalisé (aire = 1)
+plt.figure(figsize=(8,5))
+plt.hist(inscrits, bins=nb_bins, density=True, alpha=0.7)  # density=True => aire totale = 1
+plt.xlabel('Nombre d\'inscrits')
+plt.ylabel('Densité')
+plt.title('Histogramme de la distribution des inscrits (aire = 1)')
+# options : moyenne et médiane
+plt.axvline(inscrits.mean(), color='k', linestyle='--', label=f'Moyenne = {inscrits.mean():.0f}')
+plt.axvline(inscrits.median(), color='r', linestyle=':', label=f'Médiane = {inscrits.median():.0f}')
+plt.legend()
+plt.tight_layout()
+plt.savefig('./output/images_Q13/hist_inscrits.png', dpi=150)
+plt.show()
+
+# Option : KDE (si scipy/numpy ok)
+try:
+    from scipy.stats import gaussian_kde
+    kde = gaussian_kde(inscrits)
+    xs = np.linspace(inscrits.min(), inscrits.max(), 200)
+    plt.figure(figsize=(8,4))
+    plt.hist(inscrits, bins=nb_bins, density=True, alpha=0.5)
+    plt.plot(xs, kde(xs))
+    plt.title('Histogramme + KDE')
+    plt.xlabel('Nombre d\'inscrits')
+    plt.ylabel('Densité')
+    plt.tight_layout()
+    plt.savefig('src/images/hist_inscrits_kde.png', dpi=150)
+    plt.show()
+except Exception:
+    pass
 ### 14 Diagrammes en barres MAthplotlib
