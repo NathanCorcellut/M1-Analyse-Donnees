@@ -134,55 +134,18 @@ for i in range(len(idx)):
 
 # SEE MAELYS FILE
 
+
+
 ## 13
 
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from math import ceil
-
-
-n = len(inscrits)
-
-# Freedman-Diaconis pour nb de bins (optionnel)
-iqr = inscrits.quantile(0.75) - inscrits.quantile(0.25)
-if iqr == 0:
-    nb_bins = 56
-else:
-    h = 2 * iqr / (n ** (1/3))
-    if h <= 0:
-        nb_bins = 30
-    else:
-        nb_bins = int(ceil((inscrits.max() - inscrits.min()) / h))
-
 # Tracé de l'histogramme normalisé (aire = 1)
-plt.figure(figsize=(8,5))
-plt.hist(inscrits, bins=nb_bins, density=True, alpha=0.7)  # density=True => aire totale = 1
+plt.hist(inscrits, bins = 20, density=True, alpha=0.7)  # density=True => aire totale = 1
 plt.xlabel('Nombre d\'inscrits')
 plt.ylabel('Densité')
 plt.title('Histogramme de la distribution des inscrits (aire = 1)')
-# options : moyenne et médiane
-plt.axvline(inscrits.mean(), color='k', linestyle='--', label=f'Moyenne = {inscrits.mean():.0f}')
-plt.axvline(inscrits.median(), color='r', linestyle=':', label=f'Médiane = {inscrits.median():.0f}')
-plt.legend()
-plt.tight_layout()
-plt.savefig('./output/images_Q13/hist_inscrits.png', dpi=150)
+
+plt.savefig('./output/images_Q13/testcompris.png', dpi=150)
 plt.show()
 
-# Option : KDE (si scipy/numpy ok)
-try:
-    from scipy.stats import gaussian_kde
-    kde = gaussian_kde(inscrits)
-    xs = np.linspace(inscrits.min(), inscrits.max(), 200)
-    plt.figure(figsize=(8,4))
-    plt.hist(inscrits, bins=nb_bins, density=True, alpha=0.5)
-    plt.plot(xs, kde(xs))
-    plt.title('Histogramme + KDE')
-    plt.xlabel('Nombre d\'inscrits')
-    plt.ylabel('Densité')
-    plt.tight_layout()
-    plt.savefig('src/images/hist_inscrits_kde.png', dpi=150)
-    plt.show()
-except Exception:
-    pass
+
 ### 14 Diagrammes en barres MAthplotlib
