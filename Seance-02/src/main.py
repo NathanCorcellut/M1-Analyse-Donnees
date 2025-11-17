@@ -109,7 +109,6 @@ for i in range(len(colonnes)):
 print(liste_sommes)
 
 
-
 ## Question 11
 
 idx = table ["Code du département"]
@@ -129,23 +128,50 @@ for i in range(len(idx)):
 
 
 
+## Question 12 
+idx = table ["Code du département"]
+Blan = table ["Blancs"]
+Nuls = table ["Nuls"]
+Expr = table ["Exprimés"]
+Abst = table ["Abstentions"]
+for i in range(len(idx)):
 
-## Question 12
+    quad_val = [Blan[i], Nuls[i], Expr[i], Abst[i]]
+    quad_lab = ["Blancs", "Nuls", "Exprimés", "Abstentions"]
 
-# SEE MAELYS FILE
+    plt.pie(quad_val, labels= quad_lab, autopct="%1.1f%%")
+
+    #Ajout des titres et de la grille
+    plt.title("Répartition des votes dans le {}".format(idx[i])) #Titre principal
+
+    #Sauvegarde du résultat 
+    plt.savefig("./output/images_Q12/diag_circ_repart_vot_dep_{}.png".format(idx[i])) 
+    plt.close() #Fermeture 'propre' du graphe   
 
 
 
-## 13
 
+## Question 13
 # Tracé de l'histogramme normalisé (aire = 1)
-plt.hist(inscrits, bins = 20, density=True, alpha=0.7)  # density=True => aire totale = 1
+plt.hist(inscrits, bins = 20, density=True)  # density=True => aire totale = 1
 plt.xlabel('Nombre d\'inscrits')
 plt.ylabel('Densité')
-plt.title('Histogramme de la distribution des inscrits (aire = 1)')
+plt.grid(True)
+plt.title('Histogramme - distribution des inscrits (aire = 1)')
 
-plt.savefig('./output/images_Q13/testcompris.png', dpi=150)
+plt.savefig('./output/images_Q13/histogramme_inscrits.png')
 plt.show()
 
 
-### 14 Diagrammes en barres MAthplotlib
+
+
+### 14 Diagrammes en barres Mathplotlib
+
+
+
+
+
+
+
+
+
