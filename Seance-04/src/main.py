@@ -410,17 +410,40 @@ plt.close()
 
 
 ## Question 1.B.6 - Loi de Pareto
+def distrib_pareto_continu(alpha, x_m, n_max, finesse = 500):
+    K_cont = np.linspace(x_m, n_max, finesse)
+    P_cont = scipy.stats.pareto.pdf(K_cont, b=alpha, scale=x_m)
+
+    return K_cont, P_cont
+
+
 # paramètres
-alpha = 3       # shape
-xm = 1          # scale (xm est loc+scale dans scipy)
-# Dans SciPy : pdf(x) = pareto.pdf(x, b=alpha, scale=xm)
+alpha = 1      # shape
+x_m = 1          # x_m
+n_max = 20
+finesse = 500  # nombre de points
 
-x = np.linspace(xm, 20, 500)
-pdf = scipy.stats.pareto.pdf(x, b=alpha, scale=xm)
+# On génère la distribution
+K_cont, P_cont = distrib_pareto_continu(alpha, x_m, n_max, finesse)
 
-plt.plot(x, pdf)
-plt.title(f"Loi de Pareto (x_m={xm}, α={alpha})")
-plt.xlabel("Valeur de X")
+# On visualise la distribution - CLASSIQUEMENT
+plt.plot(K_cont, P_cont)
+plt.title("Loi de Pareto (avec x_m = {}, alpha = {})".format(x_m, alpha))
+plt.xlabel("x")
+plt.ylabel("Densité de probabilité f(x)")
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.savefig("./output/1_B_Distrib_Continues/6_Pareto_continu.png")
+plt.close()
+
+# On visualise la distribution - REMPLIE
+plt.plot(K_cont, P_cont)
+plt.fill_between(K_cont, P_cont, alpha=0.3)
+plt.title("Loi de Pareto (avec x_m = {}, alpha = {})".format(x_m, alpha))
+plt.xlabel("x")
+plt.ylabel("Densité de probabilité f(x)")
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.savefig("./output/1_B_Distrib_Continues/6_Pareto_continu_remplie.png")
+plt.close()
 
 ## 2 - CALCUL MOYENNE ET ECART-TYPE
 # Définition des fonctions
